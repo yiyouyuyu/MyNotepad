@@ -98,9 +98,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icon\close.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icon\icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
