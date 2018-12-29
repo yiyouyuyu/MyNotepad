@@ -11,13 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.IO;
 
 namespace MCode {
     public partial class MainWindow : Window {
 
+        private void New_Click(object sender, RoutedEventArgs e) {
+            FilePath = null;
+            MText = "";
+            MTitle = "未命名 - MCode";
+        }
         /// <summary>
         /// File->Open，打开文件
         /// </summary>
@@ -37,16 +41,17 @@ namespace MCode {
                 //r是一次读取的量
                 var r = fileStream.Read(buffer, 0, buffer.Length);
                 //清空现有的textbox
-                if (MTextBox.Text.Length > 0) {
-                    MTextBox.Text = "";
+                if (MText.Length > 0) {
+                    MText = "";
                 }
                 while (r == 8192) {
                     //读满表示没读完
-                    MTextBox.Text += Encoding.Default.GetString(buffer, 0, r);
+                    MText += Encoding.Default.GetString(buffer, 0, r);
                     r = fileStream.Read(buffer, 0, buffer.Length);
                 }
-                MTextBox.Text += Encoding.Default.GetString(buffer, 0, r);
+                MText += Encoding.Default.GetString(buffer, 0, r);
                 fileStream.Close();
+                MTitle = Path.GetFileName(FilePath) + " - MCode";
             } else {
                 //其他的情况，若要增加要使用switch
                 return;
@@ -74,9 +79,10 @@ namespace MCode {
                 }
             }
             var fileStream = new FileStream(FilePath, FileMode.Create);
-            var buffer = Encoding.Default.GetBytes(MTextBox.Text);
+            var buffer = Encoding.Default.GetBytes(MText);
             fileStream.Write(buffer, 0, buffer.Length);//！！！这里有个问题，一次的量可能会超过int，要改！！！
             fileStream.Close();
+            MTitle = Path.GetFileName(FilePath) + " - MCode";
         }
         
         /// <summary>

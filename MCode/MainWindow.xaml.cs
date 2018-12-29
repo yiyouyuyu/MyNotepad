@@ -28,9 +28,14 @@ namespace MCode {
         /// <summary>
         /// 文本编辑框体
         /// </summary>
-        private TextBox MTextBox {
-            get => textBox;
-            set => textBox = value;
+        private string MText {
+            get => textBox.Text;
+            set => textBox.Text = value;
+        }
+
+        private string MTitle {
+            get => title.Content.ToString();
+            set => title.Content = value;
         }
 
         /// <summary>
@@ -38,6 +43,7 @@ namespace MCode {
         /// </summary>
         public MainWindow() {
             InitializeComponent();
+            MTitle = "未命名 - MCode";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -53,20 +59,21 @@ namespace MCode {
         /// </summary>
         private void TextBox_SelectionChanged(object sender, RoutedEventArgs e) {
             //光标位置
-            int index = MTextBox.SelectionStart;
+            int index = textBox.SelectionStart;
             int row = 1,
                 col = 1;
             //从光标处往前遍历
             int i;
             for (i = index - 1; i >= 0; i -= 1) {
-                if (MTextBox.Text[i] == '\n') row += 1;
+                if (MText[i] == '\n') row += 1;
                 if (row == 1) col += 1;
             }
-            textBoxInformation.Text = " 第 " + row + " 行；第 " + col + " 列";
+            textBoxInformation.Content = " 第 " + row + " 行；第 " + col + " 列";
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e) {
             Close();
         }
+
     }
 }
