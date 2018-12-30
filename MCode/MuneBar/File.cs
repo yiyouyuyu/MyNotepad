@@ -106,6 +106,9 @@ namespace MCode {
             Save_Click(sender,e);
         }
 
-        
+        private void Exit_Click(object sender, RoutedEventArgs e) {
+            Exit();
+        }
+
     }
 }

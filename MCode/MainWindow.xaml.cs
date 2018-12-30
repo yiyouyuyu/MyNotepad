@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Windows.Forms;
 
 namespace MCode {
     /// <summary>
@@ -42,15 +43,26 @@ namespace MCode {
         }
 
         /// <summary>
+        /// 系统托盘图标
+        /// </summary>
+        private NotifyIcon MNotifyIcon { get; set; }
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         public MainWindow() {
             InitializeComponent();
             MTitle = "未命名 - MCode";
+            MNotifyIcon = new NotifyIcon {
+                Icon = Resource.icon,
+                Text = @"MCode",
+                Visible=true
+            };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
-            Close();
+            //Hide();
+            Exit();
         }
 
         private void Title_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
@@ -73,8 +85,12 @@ namespace MCode {
             }
             textBoxInformation.Content = " 第 " + row + " 行；第 " + col + " 列";
         }
-
-        private void Exit_Click(object sender, RoutedEventArgs e) {
+        
+        private void Exit() {
+            if (FilePath == null) {
+                MNotifyIcon.BalloonTipText = @"刚刚的文件没有保存";
+                MNotifyIcon.ShowBalloonTip(6);
+            }
             Close();
         }
 
