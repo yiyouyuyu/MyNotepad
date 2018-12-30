@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace MCode {
     /// <summary>
@@ -54,7 +55,7 @@ namespace MCode {
             InitializeComponent();
             MTitle = "未命名 - MCode";
             MNotifyIcon = new NotifyIcon {
-                Icon = Resource.icon,
+                Icon = Properties.Resources.icon,
                 Text = @"MCode",
                 Visible=true
             };
