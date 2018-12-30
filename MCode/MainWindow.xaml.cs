@@ -57,16 +57,11 @@ namespace MCode {
             MNotifyIcon = new NotifyIcon {
                 Icon = Properties.Resources.icon,
                 Text = @"MCode",
-                Visible=true
+                BalloonTipText = @"刚刚的文件没有保存"
             };
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-            //Hide();
-            Exit();
-        }
-
-        private void Title_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+        
+        private void WindowMove(object sender, MouseButtonEventArgs e) {
             DragMove();
         }
 
@@ -86,14 +81,32 @@ namespace MCode {
             }
             textBoxInformation.Content = " 第 " + row + " 行；第 " + col + " 列";
         }
-        
+
+        private void WindowMinimized_Click(object sender, RoutedEventArgs e) {
+            WindowState = WindowState.Minimized;
+        }
+        private void WindowSize_Click(object sender, RoutedEventArgs e) {
+            if (WindowState == WindowState.Normal) {
+                WindowState = WindowState.Maximized;
+            } else {
+                WindowState = WindowState.Normal;
+            }
+        }
+
+        private void WindowClose_Click(object sender, RoutedEventArgs e) {
+            //Hide();
+            Exit();
+        }
+
         private void Exit() {
             if (FilePath == null) {
-                MNotifyIcon.BalloonTipText = @"刚刚的文件没有保存";
+                MNotifyIcon.Visible = true;
                 MNotifyIcon.ShowBalloonTip(6);
+                MNotifyIcon.Visible = false;
             }
             Close();
         }
+
 
     }
 }

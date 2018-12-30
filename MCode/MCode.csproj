@@ -104,6 +104,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MuneBar\Edit.cs" />
     <Compile Include="MuneBar\File.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -144,6 +145,33 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\toolSave32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\toolOpen32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\toolNew32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\toolUndo32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\toolRedo32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\windowClose32x24.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\windowMinimized32x24.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\windowNormal32x24.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\windowMaximized32x24.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
