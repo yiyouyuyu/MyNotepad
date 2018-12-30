@@ -33,6 +33,9 @@ namespace MCode {
             set => textBox.Text = value;
         }
 
+        /// <summary>
+        /// window标题
+        /// </summary>
         private string MTitle {
             get => title.Content.ToString();
             set => title.Content = value;

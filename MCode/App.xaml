@@ -27,5 +27,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <BitmapImage x:Key="titleIcon" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\代码\C#\MCode\MCode\Resources\Icon.ico"/>
     </Application.Resources>
 </Application>
