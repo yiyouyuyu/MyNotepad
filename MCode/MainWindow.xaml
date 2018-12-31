@@ -12,6 +12,7 @@
         WindowStyle="None"
         Height="450" Width="800"
         UseLayoutRounding="True"
+        KeyDown="Window_KeyDown"
         >
     <Grid Name="mWindow" Background="#FF39C5BB">
         <Grid.RowDefinitions>
@@ -32,41 +33,47 @@
             <Grid Name="windowHead" Grid.ColumnSpan="3" MouseLeftButtonDown="WindowMove"  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
                 <WrapPanel Name="windowTitle" Orientation="Horizontal" Margin="5,5,5,0" HorizontalAlignment="Left">
                     <Image Source="Resources/icon43x25.ico" Height="25" Width="43" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <Menu x:Name="menu"  Background="{x:Null}" Grid.Column="1" VerticalAlignment="Center" >
-                        <MenuItem Header="File">
-                            <MenuItem Header="New" Click="New_Click">
+                    <Menu x:Name="menu"  Background="{x:Null}" Grid.Column="1" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="Contained" >
+                        <MenuItem Name="alt" Header="File">
+                            <MenuItem Header="New" InputGestureText="Ctrl+N" Click="New_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/toolNew32.ico"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Open" Click="Open_Click">
+                            <MenuItem Header="Open" InputGestureText="Ctrl+O" Click="Open_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/toolOpen32.ico"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Save" Click="Save_Click" >
+                            <MenuItem Header="Save" InputGestureText="Ctrl+S" Click="Save_Click" >
                                 <MenuItem.Icon>
                                     <Image Source="Resources/toolSave32.ico"/>
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="Save as" Click="SaveAs_Click"/>
                             <Separator/>
-                            <MenuItem Header="Exit" Click="Exit_Click"/>
+                            <MenuItem Header="Exit" InputGestureText="Alt+F4" Click="Exit_Click"/>
                         </MenuItem>
                         <MenuItem Header="Edit">
-                            <MenuItem Header="Undo" Click="Undo_Click">
+                            <MenuItem Header="Undo" InputGestureText="Ctrl+Z" Click="Undo_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/toolUndo32.ico"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Redo" Click="Redo_Click">
+                            <MenuItem Header="Redo" InputGestureText="Ctrl+Y" Click="Redo_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/toolRedo32.ico"/>
                                 </MenuItem.Icon>
                             </MenuItem>
                             <Separator/>
-                            <MenuItem Header="Copy" Click="Copy_Click"/>
-                            <MenuItem Header="Paste" Click="Paste_Click"/>
+                            <MenuItem Header="Find" InputGestureText="Ctrl+F" Click="Find_Click">
+                            </MenuItem>
+                            <MenuItem Header="Replace" InputGestureText="Ctrl+H">
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem Header="Cut" InputGestureText="Ctrl+X" Click="Cut_Click"/>
+                            <MenuItem Header="Copy" InputGestureText="Ctrl+C" Click="Copy_Click"/>
+                            <MenuItem Header="Paste" InputGestureText="Ctrl+V" Click="Paste_Click"/>
                             <Separator/>
                             <MenuItem Header="Date" Click="Date_Click"/>
                         </MenuItem>
@@ -85,7 +92,7 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <ToolBarTray Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="158">
+            <ToolBarTray Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
                 <ToolBar>
                     <Button Click="New_Click">
                         <Image Source="Resources/toolNew32.ico" Height="16"/>

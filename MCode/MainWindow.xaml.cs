@@ -13,8 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-using System.Windows.Forms;
-using System.Drawing;
 
 namespace MCode {
     /// <summary>
@@ -38,7 +36,7 @@ namespace MCode {
         /// <summary>
         /// 系统托盘图标
         /// </summary>
-        private NotifyIcon MNotifyIcon { get; set; }
+        private System.Windows.Forms.NotifyIcon MNotifyIcon { get; set; }
 
         /// <summary>
         /// 构造函数
@@ -46,7 +44,7 @@ namespace MCode {
         public MainWindow() {
             InitializeComponent();
             Title = "未命名 - MCode";
-            MNotifyIcon = new NotifyIcon {
+            MNotifyIcon = new System.Windows.Forms.NotifyIcon {
                 Icon = Properties.Resources.icon,
                 Text = @"MCode",
                 BalloonTipText = @"刚刚的文件没有保存"
@@ -59,22 +57,27 @@ namespace MCode {
         private void WindowMove(object sender, MouseButtonEventArgs e) {
             if(WindowState == WindowState.Maximized) {
                 ChangeWindowState();
+                //因为拖动区域在窗口顶部，所以移动到最上面就行了
+                Point mousePoint = Mouse.GetPosition(this);
+                Left = mousePoint.X - Width * mousePoint.X / SystemParameters.WorkArea.Width;
+                Top =0;
             }
             DragMove();
+            if (WindowState == WindowState.Maximized) {
+                mWindow.Margin = new Thickness(7);
+            }
         }
 
         /// <summary>
         /// 在状态栏跟踪光标位置
         /// </summary>
         private void TextBox_SelectionChanged(object sender, RoutedEventArgs e) {
-            //光标位置
-            int index = textBox.SelectionStart;
-            int row = 1,
+            int index,
+                row = 1,
                 col = 1;
             //从光标处往前遍历
-            int i;
-            for (i = index - 1; i >= 0; i -= 1) {
-                if (MText[i] == '\n') row += 1;
+            for (index = textBox.SelectionStart - 1; index >= 0; index -= 1) {
+                if (MText[index] == '\n') row += 1;
                 if (row == 1) col += 1;
             }
             textBoxInformation.Content = " 第 " + row + " 行；第 " + col + " 列";
@@ -125,6 +128,13 @@ namespace MCode {
             }
             Close();
         }
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
+            if(e.KeyStates== Keyboard.GetKeyStates(Key.LeftAlt)) {
+                alt.Focus();
+            }
+        }
+
 
     }
 }

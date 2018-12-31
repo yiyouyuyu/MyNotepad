@@ -36,11 +36,27 @@ namespace MCode {
             textBox.Redo();
         }
 
+        private void Find_Click(object sender, RoutedEventArgs e) {
 
+        }
+
+        /// <summary>
+        /// 剪切
+        /// </summary>
+        private void Cut_Click(object sender, RoutedEventArgs e) {
+            textBox.Cut();
+        }
+        
+        /// <summary>
+        /// 复制
+        /// </summary>
         private void Copy_Click(object sender, RoutedEventArgs e) {
             textBox.Copy();
         }
 
+        /// <summary>
+        /// 粘贴
+        /// </summary>
         private void Paste_Click(object sender, RoutedEventArgs e) {
             textBox.Paste();
         }
