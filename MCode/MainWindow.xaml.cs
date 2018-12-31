@@ -45,7 +45,7 @@ namespace MCode {
             InitializeComponent();
             Title = "未命名 - MCode";
             MNotifyIcon = new System.Windows.Forms.NotifyIcon {
-                Icon = Properties.Resources.icon,
+                Icon = Properties.Resources.icon32x32,
                 Text = @"MCode",
                 BalloonTipText = @"刚刚的文件没有保存"
             };
@@ -127,7 +127,6 @@ namespace MCode {
             if (FilePath == null) {
                 MNotifyIcon.Visible = true;
                 MNotifyIcon.ShowBalloonTip(6);
-                MNotifyIcon.Visible = false;
             }
             Close();
         }

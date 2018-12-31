@@ -53,8 +53,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\icon32x32.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -176,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\check32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon32x32.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
