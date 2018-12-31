@@ -1,70 +1,91 @@
-﻿<Window
+﻿<Window x:Class="MCode.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MCode"
-        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="MCode.MainWindow"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         ScrollViewer.CanContentScroll="True"
         ResizeMode="CanResizeWithGrip"
         AllowsTransparency="True"
         WindowStyle="None"
-        Title="{Binding Content, ElementName=title}"
-        Height="450" Width="800">
-    <Border Background="#FFB4B4B4">
-        <Grid x:Name="grid" Margin="1" Background="#FFF0F0F0" >
+        Height="450" Width="800"
+        UseLayoutRounding="True"
+        >
+    <Grid Name="mWindow" Background="#FF39C5BB">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="grid" Background="#FFF0F0F0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="windowHead" Margin="0" MouseLeftButtonDown="WindowMove" Grid.Row="1" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="32"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="Resources/icon.ico"/>
-                <Label x:Name="title" Content="MCode" FontSize="14" VerticalAlignment="Center" Grid.Column="1"/>
-                <Button Margin="0,0,68,0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2" BorderThickness="0" Background="{Binding Background, ElementName=grid}" Click="WindowMinimized_Click">
-                    <Image Source="Resources/windowMinimized32x24.ico"/>
-                </Button>
-                <Button Margin="0,0,34,0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2" BorderThickness="0" Background="{Binding Background, ElementName=grid}" Click="WindowSize_Click">
-                    <Image Name="windowSize" Source="Resources/windowMaximized32x24.ico"/>
-                </Button>
-                <Button Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="2" BorderThickness="0" Background="{Binding Background, ElementName=grid}" Click="WindowClose_Click">
-                    <Image Source="Resources/windowClose32x24.ico"/>
-                </Button>
+            <Grid Name="windowHead" Grid.ColumnSpan="3" MouseLeftButtonDown="WindowMove"  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+                <WrapPanel Name="windowTitle" Orientation="Horizontal" Margin="5,5,5,0" HorizontalAlignment="Left">
+                    <Image Source="Resources/icon43x25.ico" Height="25" Width="43" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Menu x:Name="menu"  Background="{x:Null}" Grid.Column="1" VerticalAlignment="Center" >
+                        <MenuItem Header="File">
+                            <MenuItem Header="New" Click="New_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/toolNew32.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Open" Click="Open_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/toolOpen32.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Save" Click="Save_Click" >
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/toolSave32.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Save as" Click="SaveAs_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Exit" Click="Exit_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="Edit">
+                            <MenuItem Header="Undo" Click="Undo_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/toolUndo32.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Redo" Click="Redo_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/toolRedo32.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator/>
+                            <MenuItem Header="Copy" Click="Copy_Click"/>
+                            <MenuItem Header="Paste" Click="Paste_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Date" Click="Date_Click"/>
+                        </MenuItem>
+                    </Menu>
+                    
+                </WrapPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" MinWidth="52" MinHeight="26">
+                    <Button BorderThickness="0" Background="{Binding Background, ElementName=grid}" Click="WindowMinimized_Click">
+                        <Image Source="Resources/windowMinimized32x24.ico"/>
+                    </Button>
+                    <Button BorderThickness="0" Background="{Binding Background, ElementName=grid}" Click="WindowSize_Click">
+                        <Image x:Name="windowSize" Source="Resources/windowMaximized32x24.ico"/>
+                    </Button>
+                    <Button BorderThickness="0" Background="{Binding Background, ElementName=grid}" Click="WindowClose_Click">
+                        <Image Source="Resources/windowClose32x24.ico"/>
+                    </Button>
+                </StackPanel>
             </Grid>
-            <Menu x:Name="menu" FontSize="14" Grid.Row="2" Grid.Column="1" Height="20" Margin="0,2" Background="{x:Null}">
-                <MenuItem Header="File">
-                    <MenuItem Header="New" Click="New_Click"/>
-                    <MenuItem Header="Open" Click="Open_Click"/>
-                    <MenuItem Header="Save" Click="Save_Click" />
-                    <MenuItem Header="Save as" Click="SaveAs_Click"/>
-                    <Separator/>
-                    <MenuItem Header="Exit" Click="Exit_Click"/>
-                </MenuItem>
-                <MenuItem Header="Edit">
-                    <MenuItem Header="Undo" Click="Undo_Click"/>
-                    <MenuItem Header="Redo" Click="Redo_Click"/>
-                    <Separator/>
-                    <MenuItem Header="Date" Click="Date_Click"/>
-                </MenuItem>
-            </Menu>
-
-
-            <ToolBarTray Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left">
+            <ToolBarTray Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="158">
                 <ToolBar>
                     <Button Click="New_Click">
                         <Image Source="Resources/toolNew32.ico" Height="16"/>
@@ -85,21 +106,19 @@
                     </Button>
                 </ToolBar>
             </ToolBarTray>
+        </Grid>
 
-
-            <TextBox x:Name="textBox"
-                     Grid.Row="4"
-                     Grid.Column="1"
+        <TextBox x:Name="textBox"
+                     Grid.Row="1"
                      FontSize="14"
                      AcceptsReturn="True"
                      HorizontalScrollBarVisibility="Visible"
                      VerticalScrollBarVisibility="Visible"
                      SelectionChanged="TextBox_SelectionChanged"
-                     AcceptsTab="True"/>
-            <StatusBar Grid.Row="6" Background="#39C5BB" Grid.ColumnSpan="3" >
-                <StatusBarItem x:Name="textBoxInformation" Content=" 第 1 行；第 1 列"  Foreground="White" HorizontalAlignment="Left"/>
-            </StatusBar>
-
-        </Grid>
-    </Border>
+                     AcceptsTab="True" 
+                     Margin="5"/>
+        <StatusBar Background="#39C5BB" Grid.Row="2" >
+            <StatusBarItem x:Name="textBoxInformation" Content=" 第 1 行；第 1 列"  Foreground="White" HorizontalAlignment="Left"/>
+        </StatusBar>
+    </Grid>
 </Window>

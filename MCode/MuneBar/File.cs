@@ -20,7 +20,7 @@ namespace MCode {
         private void New_Click(object sender, RoutedEventArgs e) {
             FilePath = null;
             MText = "";
-            MTitle = "未命名 - MCode";
+            Title = "未命名 - MCode";
         }
         /// <summary>
         /// File->Open，打开文件
@@ -51,7 +51,7 @@ namespace MCode {
                 }
                 MText += Encoding.Default.GetString(buffer, 0, r);
                 fileStream.Close();
-                MTitle = Path.GetFileName(FilePath) + " - MCode";
+                Title = Path.GetFileName(FilePath) + " - MCode";
             } else {
                 //其他的情况，若要增加要使用switch
                 return;
@@ -82,7 +82,7 @@ namespace MCode {
             var buffer = Encoding.Default.GetBytes(MText);
             fileStream.Write(buffer, 0, buffer.Length);//！！！这里有个问题，一次的量可能会超过int，要改！！！
             fileStream.Close();
-            MTitle = Path.GetFileName(FilePath) + " - MCode";
+            Title = Path.GetFileName(FilePath) + " - MCode";
         }
         
         /// <summary>

@@ -18,7 +18,7 @@ using System.Drawing;
 
 namespace MCode {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// MCode的主编辑区
     /// </summary>
     public partial class MainWindow : Window {
 
@@ -36,14 +36,6 @@ namespace MCode {
         }
 
         /// <summary>
-        /// window标题
-        /// </summary>
-        private string MTitle {
-            get => title.Content.ToString();
-            set => title.Content = value;
-        }
-
-        /// <summary>
         /// 系统托盘图标
         /// </summary>
         private NotifyIcon MNotifyIcon { get; set; }
@@ -53,7 +45,7 @@ namespace MCode {
         /// </summary>
         public MainWindow() {
             InitializeComponent();
-            MTitle = "未命名 - MCode";
+            Title = "未命名 - MCode";
             MNotifyIcon = new NotifyIcon {
                 Icon = Properties.Resources.icon,
                 Text = @"MCode",
@@ -61,7 +53,13 @@ namespace MCode {
             };
         }
         
+        /// <summary>
+        /// 移动窗口
+        /// </summary>
         private void WindowMove(object sender, MouseButtonEventArgs e) {
+            if(WindowState == WindowState.Maximized) {
+                ChangeWindowState();
+            }
             DragMove();
         }
 
@@ -82,22 +80,43 @@ namespace MCode {
             textBoxInformation.Content = " 第 " + row + " 行；第 " + col + " 列";
         }
 
+        /// <summary>
+        /// 最小化
+        /// </summary>
         private void WindowMinimized_Click(object sender, RoutedEventArgs e) {
             WindowState = WindowState.Minimized;
         }
+
+        /// <summary>
+        /// 改变窗口大小
+        /// </summary>
         private void WindowSize_Click(object sender, RoutedEventArgs e) {
+            ChangeWindowState();
+        }
+
+        /// <summary>
+        /// 改变窗口大小
+        /// </summary>
+        private void ChangeWindowState() {
             if (WindowState == WindowState.Normal) {
                 WindowState = WindowState.Maximized;
+                mWindow.Margin = new Thickness(7);
             } else {
                 WindowState = WindowState.Normal;
+                mWindow.Margin = new Thickness();
             }
         }
 
+        /// <summary>
+        /// 关闭
+        /// </summary>
         private void WindowClose_Click(object sender, RoutedEventArgs e) {
-            //Hide();
             Exit();
         }
 
+        /// <summary>
+        /// 退出
+        /// </summary>
         private void Exit() {
             if (FilePath == null) {
                 MNotifyIcon.Visible = true;
@@ -106,7 +125,6 @@ namespace MCode {
             }
             Close();
         }
-
 
     }
 }

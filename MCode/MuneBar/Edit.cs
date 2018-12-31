@@ -36,6 +36,15 @@ namespace MCode {
             textBox.Redo();
         }
 
+
+        private void Copy_Click(object sender, RoutedEventArgs e) {
+            textBox.Copy();
+        }
+
+        private void Paste_Click(object sender, RoutedEventArgs e) {
+            textBox.Paste();
+        }
+
         /// <summary>
         /// 插入系统时间
         /// </summary>
