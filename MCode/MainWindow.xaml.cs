@@ -65,6 +65,7 @@ namespace MCode {
             DragMove();
             if (WindowState == WindowState.Maximized) {
                 mWindow.Margin = new Thickness(7);
+                windowSize.Source = new BitmapImage(new Uri("Resources/windowNormal32X24.ico", UriKind.Relative));
             }
         }
 
@@ -104,9 +105,11 @@ namespace MCode {
             if (WindowState == WindowState.Normal) {
                 WindowState = WindowState.Maximized;
                 mWindow.Margin = new Thickness(7);
+                windowSize.Source= new BitmapImage(new Uri("Resources/windowNormal32X24.ico", UriKind.Relative));
             } else {
                 WindowState = WindowState.Normal;
                 mWindow.Margin = new Thickness();
+                windowSize.Source = new BitmapImage(new Uri("Resources/windowMaximized32X24.ico", UriKind.Relative));
             }
         }
 
@@ -129,12 +132,14 @@ namespace MCode {
             Close();
         }
 
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e) {
-            if(e.KeyStates== Keyboard.GetKeyStates(Key.LeftAlt)) {
-                alt.Focus();
+        private void Wrap_Click(object sender, RoutedEventArgs e) {
+            if (textBox.TextWrapping == TextWrapping.NoWrap) {
+                textBox.TextWrapping = TextWrapping.Wrap;
+                wrapAuto.Source = new BitmapImage(new Uri("Resources/check32.ico", UriKind.Relative));
+            } else {
+                textBox.TextWrapping = TextWrapping.NoWrap;
+                wrapAuto.Source = null;
             }
         }
-
-
     }
 }
