@@ -114,16 +114,9 @@ namespace MCode {
         }
 
         /// <summary>
-        /// 关闭
-        /// </summary>
-        private void WindowClose_Click(object sender, RoutedEventArgs e) {
-            Exit();
-        }
-
-        /// <summary>
         /// 退出
         /// </summary>
-        private void Exit() {
+        private void Close_Executed(object sender, ExecutedRoutedEventArgs e) {
             if (FilePath == null) {
                 MNotifyIcon.Visible = true;
                 MNotifyIcon.ShowBalloonTip(6);
@@ -131,6 +124,9 @@ namespace MCode {
             Close();
         }
 
+        /// <summary>
+        /// 自动换行
+        /// </summary>
         private void Wrap_Click(object sender, RoutedEventArgs e) {
             if (textBox.TextWrapping == TextWrapping.NoWrap) {
                 textBox.TextWrapping = TextWrapping.Wrap;
@@ -140,5 +136,7 @@ namespace MCode {
                 wrapAuto.Source = null;
             }
         }
+
+
     }
 }

@@ -179,5 +179,8 @@
   <ItemGroup>
     <Resource Include="Resources\icon32x32.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\toolRedoU32.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
