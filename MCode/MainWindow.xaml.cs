@@ -64,7 +64,6 @@ namespace MCode {
             }
             DragMove();
             if (WindowState == WindowState.Maximized) {
-                mWindow.Margin = new Thickness(7);
                 windowSize.Source = new BitmapImage(new Uri("Resources/windowNormal32X24.ico", UriKind.Relative));
             }
         }
@@ -103,20 +102,15 @@ namespace MCode {
         /// </summary>
         private void ChangeWindowState() {
             if (WindowState == WindowState.Normal) {
-                WindowState = WindowState.Maximized;
-                mWindow.Margin = new Thickness(7);
                 windowSize.Source= new BitmapImage(new Uri("Resources/windowNormal32X24.ico", UriKind.Relative));
+                WindowState = WindowState.Maximized;
             } else {
-                WindowState = WindowState.Normal;
-                mWindow.Margin = new Thickness();
                 windowSize.Source = new BitmapImage(new Uri("Resources/windowMaximized32X24.ico", UriKind.Relative));
+                WindowState = WindowState.Normal;
             }
         }
 
-        /// <summary>
-        /// 退出
-        /// </summary>
-        private void Close_Executed(object sender, ExecutedRoutedEventArgs e) {
+        private void WindowClose_Click(object sender, RoutedEventArgs e) {
             if (FilePath == null) {
                 MNotifyIcon.Visible = true;
                 MNotifyIcon.ShowBalloonTip(6);

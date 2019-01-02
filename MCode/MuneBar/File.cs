@@ -100,7 +100,12 @@ namespace MCode {
             Title = Path.GetFileName(FilePath) + " - MCode";
         }
 
-
+        /// <summary>
+        /// 退出
+        /// </summary>
+        private void Close_Executed(object sender, ExecutedRoutedEventArgs e) {
+            WindowClose_Click(sender, e);
+        }
 
     }
 }
