@@ -21,16 +21,16 @@ namespace MCode {
     public partial class MainWindow : Window {
 
         /// <summary>
-        /// 当前打开的文件路径
+        /// 打开的文件
         /// </summary>
-        private string FilePath { get; set; }
+        private List<EditWindow> Files { get; set; }
 
         /// <summary>
-        /// 文本编辑框体
+        /// 文件控制
         /// </summary>
-        private string MText {
-            get => textBox.Text;
-            set => textBox.Text = value;
+        private TabControl EditControl {
+            get => editControl;
+            set => editControl = value;
         }
 
         /// <summary>
@@ -43,7 +43,8 @@ namespace MCode {
         /// </summary>
         public MainWindow() {
             InitializeComponent();
-            Title = "未命名 - MCode";
+            Title = "MCode";
+            Files = new List<EditWindow>();
             MNotifyIcon = new System.Windows.Forms.NotifyIcon {
                 Icon = Properties.Resources.icon32x32,
                 Text = @"MCode",
@@ -63,9 +64,6 @@ namespace MCode {
                 Top =0;
             }
             DragMove();
-            if (WindowState == WindowState.Maximized) {
-                windowSize.Source = new BitmapImage(new Uri("Resources/windowNormal32X24.ico", UriKind.Relative));
-            }
         }
 
         /// <summary>
@@ -75,9 +73,11 @@ namespace MCode {
             int index,
                 row = 1,
                 col = 1;
+
+            EditWindow mainEdit = (EditWindow)EditControl.SelectedItem;
             //从光标处往前遍历
-            for (index = textBox.SelectionStart - 1; index >= 0; index -= 1) {
-                if (MText[index] == '\n') row += 1;
+            for (index = mainEdit.MTextBox.SelectionStart - 1; index >= 0; index -= 1) {
+                if (mainEdit.MTextBox.Text[index] == '\n') row += 1;
                 if (row == 1) col += 1;
             }
             textBoxInformation.Content = " 第 " + row + " 行；第 " + col + " 列";
@@ -102,18 +102,19 @@ namespace MCode {
         /// </summary>
         private void ChangeWindowState() {
             if (WindowState == WindowState.Normal) {
-                windowSize.Source= new BitmapImage(new Uri("Resources/windowNormal32X24.ico", UriKind.Relative));
                 WindowState = WindowState.Maximized;
             } else {
-                windowSize.Source = new BitmapImage(new Uri("Resources/windowMaximized32X24.ico", UriKind.Relative));
                 WindowState = WindowState.Normal;
             }
         }
 
         private void WindowClose_Click(object sender, RoutedEventArgs e) {
-            if (FilePath == null) {
-                MNotifyIcon.Visible = true;
-                MNotifyIcon.ShowBalloonTip(6);
+            foreach(EditWindow file in EditControl.Items) {
+                if (file.FilePath == null) {
+                    MNotifyIcon.Visible = true;
+                    MNotifyIcon.ShowBalloonTip(6);
+                    break;
+                }
             }
             Close();
         }
@@ -122,11 +123,16 @@ namespace MCode {
         /// 自动换行
         /// </summary>
         private void Wrap_Click(object sender, RoutedEventArgs e) {
-            if (textBox.TextWrapping == TextWrapping.NoWrap) {
-                textBox.TextWrapping = TextWrapping.Wrap;
+            if (wrapAuto.Source == null) {
+                foreach (EditWindow file in EditControl.Items) {
+                    file.MTextBox.TextWrapping = TextWrapping.WrapWithOverflow;
+                }
                 wrapAuto.Source = new BitmapImage(new Uri("Resources/check32.ico", UriKind.Relative));
             } else {
-                textBox.TextWrapping = TextWrapping.NoWrap;
+
+                foreach (EditWindow file in EditControl.Items) {
+                    file.MTextBox.TextWrapping = TextWrapping.NoWrap;
+                }
                 wrapAuto.Source = null;
             }
         }
