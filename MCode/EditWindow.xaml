@@ -3,6 +3,14 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          Background="GhostWhite"
          >
+    <TabItem.Header>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock x:Name="textBlock"/>
+            <Button x:Name="closeButton" Background="{x:Null}" BorderThickness="0">
+                <Image Source="Resources/tabClose16.ico"/>
+            </Button>
+        </StackPanel>
+    </TabItem.Header>
     <Grid>
         <TextBox x:Name="textBox"
                  FontSize="14"

@@ -75,12 +75,16 @@ namespace MCode {
                 col = 1;
 
             EditWindow mainEdit = (EditWindow)EditControl.SelectedItem;
+            if(mainEdit is null) {
+                textBoxInformation.Content = "";
+                return;
+            }
             //从光标处往前遍历
             for (index = mainEdit.MTextBox.SelectionStart - 1; index >= 0; index -= 1) {
                 if (mainEdit.MTextBox.Text[index] == '\n') row += 1;
                 if (row == 1) col += 1;
             }
-            textBoxInformation.Content = " 第 " + row + " 行；第 " + col + " 列";
+            textBoxInformation.Content = $" 第 {row} 行；第 {col} 列";
         }
 
         /// <summary>
@@ -110,7 +114,7 @@ namespace MCode {
 
         private void WindowClose_Click(object sender, RoutedEventArgs e) {
             foreach(EditWindow file in EditControl.Items) {
-                if (file.FilePath == null) {
+                if (false) {
                     MNotifyIcon.Visible = true;
                     MNotifyIcon.ShowBalloonTip(6);
                     break;

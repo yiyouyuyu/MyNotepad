@@ -22,7 +22,12 @@ namespace MCode {
         /// <summary>
         /// 此窗口对应的文件
         /// </summary>
-        public string FilePath { get; private set; }
+        private string FilePath { get; set; }
+
+        private string FileName {
+            get => textBlock.Text;
+            set => textBlock.Text = value;
+        }
 
         /// <summary>
         /// 文本编辑框体
@@ -39,12 +44,12 @@ namespace MCode {
         public EditWindow(string path=null) {
             InitializeComponent();
             if (path == null) {
-                Header = "未命名" + num + ".txt";
+                FileName = "未命名" + num + ".txt";
                 num += 1;
             } else {
                 FilePath = path;
                 //设置选项框名字
-                Header = Path.GetFileName(FilePath);
+                FileName = Path.GetFileName(FilePath);
                 var fileStream = new FileStream(FilePath, FileMode.Open);
                 var buffer = new byte[8192];
                 var r = fileStream.Read(buffer, 0, buffer.Length);
@@ -64,7 +69,7 @@ namespace MCode {
         public void Save(string path=null) {
             if (path!=null) {
                 FilePath = path;
-                Header = Path.GetFileName(FilePath);
+                FileName = Path.GetFileName(FilePath);
             } else if(FilePath==null) {
                 var saveFileDialog = new System.Windows.Forms.SaveFileDialog() {
                     Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*",
@@ -73,7 +78,7 @@ namespace MCode {
                 var result = saveFileDialog.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK) {
                     FilePath = saveFileDialog.FileName;
-                    Header = Path.GetFileName(FilePath);
+                    FileName = Path.GetFileName(FilePath);
                 } else {
                     //其他的情况，若要增加要使用switch
                     return;
@@ -83,13 +88,6 @@ namespace MCode {
             var buffer = Encoding.Default.GetBytes(MTextBox.Text);
             fileStream.Write(buffer, 0, buffer.Length);//！！！这里有个问题，一次的量可能会超过int，要改！！！
             fileStream.Close();
-        }
-
-        /// <summary>
-        /// 退出
-        /// </summary>
-        private void Close() {
-
         }
 
     }

@@ -24,6 +24,7 @@ namespace MCode {
             EditWindow newFile = new EditWindow();
             newFile.MTextBox.SelectionChanged += TextBox_SelectionChanged;
             newFile.MTextBox.GotFocus += TextBox_SelectionChanged;
+            newFile.closeButton.Click += Close_Click;
             Files.Add(newFile);
             EditControl.Items.Add(newFile);
             editControl.SelectedItem = newFile;
@@ -44,6 +45,7 @@ namespace MCode {
                 EditWindow newFile = new EditWindow(openFileDialog.FileName);
                 newFile.MTextBox.SelectionChanged += TextBox_SelectionChanged;
                 newFile.MTextBox.GotFocus += TextBox_SelectionChanged;
+                newFile.closeButton.Click += Close_Click;
                 Files.Add(newFile);
                 EditControl.Items.Add(newFile);
                 editControl.SelectedItem = newFile;
@@ -88,7 +90,12 @@ namespace MCode {
         /// </summary>
         private void Close_Executed(object sender, ExecutedRoutedEventArgs e) {
             EditControl.Items.Remove(EditControl.SelectedItem);
-        }
+            TextBox_SelectionChanged(sender, e);
+            }
 
+        private void Close_Click(object sender, RoutedEventArgs e) {
+            EditControl.Items.Remove(EditControl.SelectedItem);
+            TextBox_SelectionChanged(sender, e);
+        }
     }
 }

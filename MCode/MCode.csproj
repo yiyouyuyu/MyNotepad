@@ -192,5 +192,8 @@
   <ItemGroup>
     <Resource Include="Resources\toolUndoU32.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tabClose16.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
