@@ -71,7 +71,7 @@
                 <ColumnDefinition Width="102"/>
             </Grid.ColumnDefinitions>
             <Image Source="Resources/icon43x25.ico" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1" VerticalAlignment="Top"/>
-            <Menu x:Name="menu"  Background="{x:Null}" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="Contained" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" >
+            <Menu x:Name="menu"  Background="{x:Null}" VerticalAlignment="Bottom" KeyboardNavigation.TabNavigation="Contained" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" FontSize="14" Margin="0" >
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Command="New">
                         <MenuItem.Icon>
@@ -104,7 +104,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="_Find" InputGestureText="Ctrl+F" Click="Find_Click"/>
+                    <MenuItem Header="_Find" InputGestureText="Ctrl+F"/>
                     <MenuItem Header="_Replace" InputGestureText="Ctrl+H"/>
                     <Separator/>
                     <MenuItem Header="_Cut" Command="Cut"/>

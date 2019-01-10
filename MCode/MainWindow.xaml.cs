@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using SWForms = System.Windows.Forms;
+using System.Diagnostics;
 
 namespace MCode {
     /// <summary>
@@ -23,7 +25,9 @@ namespace MCode {
         /// <summary>
         /// 打开的文件
         /// </summary>
-        private List<EditWindow> Files { get; set; }
+        private ItemCollection Files {
+            get => EditControl.Items;
+        }
 
         /// <summary>
         /// 文件控制
@@ -36,7 +40,7 @@ namespace MCode {
         /// <summary>
         /// 系统托盘图标
         /// </summary>
-        private System.Windows.Forms.NotifyIcon MNotifyIcon { get; set; }
+        private SWForms.NotifyIcon MNotifyIcon { get; set; }
 
         /// <summary>
         /// 构造函数
@@ -44,11 +48,10 @@ namespace MCode {
         public MainWindow() {
             InitializeComponent();
             Title = "MCode";
-            Files = new List<EditWindow>();
-            MNotifyIcon = new System.Windows.Forms.NotifyIcon {
+            MNotifyIcon = new SWForms.NotifyIcon {
                 Icon = Properties.Resources.icon32x32,
-                Text = @"MCode",
-                BalloonTipText = @"刚刚的文件没有保存"
+                Text = "MCode",
+                BalloonTipText = "刚刚的文件没有保存"
             };
         }
         
@@ -56,7 +59,7 @@ namespace MCode {
         /// 移动窗口
         /// </summary>
         private void WindowMove(object sender, MouseButtonEventArgs e) {
-            if(WindowState == WindowState.Maximized) {
+            if(WindowState is WindowState.Maximized) {
                 ChangeWindowState();
                 //因为拖动区域在窗口顶部，所以移动到最上面就行了
                 Point mousePoint = Mouse.GetPosition(this);
@@ -73,18 +76,16 @@ namespace MCode {
             int index,
                 row = 1,
                 col = 1;
-
-            EditWindow mainEdit = (EditWindow)EditControl.SelectedItem;
-            if(mainEdit is null) {
+            if (EditControl.SelectedItem is EditWindow mainEdit) {
+                //从光标处往前遍历
+                for (index = mainEdit.MTextBox.SelectionStart - 1; index >= 0; index -= 1) {
+                    if (mainEdit.MTextBox.Text[index] == '\n') row += 1;
+                    if (row == 1) col += 1;
+                }
+                textBoxInformation.Content = $" 第 {row} 行；第 {col} 列";
+            } else {
                 textBoxInformation.Content = "";
-                return;
             }
-            //从光标处往前遍历
-            for (index = mainEdit.MTextBox.SelectionStart - 1; index >= 0; index -= 1) {
-                if (mainEdit.MTextBox.Text[index] == '\n') row += 1;
-                if (row == 1) col += 1;
-            }
-            textBoxInformation.Content = $" 第 {row} 行；第 {col} 列";
         }
 
         /// <summary>
@@ -105,19 +106,24 @@ namespace MCode {
         /// 改变窗口大小
         /// </summary>
         private void ChangeWindowState() {
-            if (WindowState == WindowState.Normal) {
+            if (WindowState is WindowState.Normal) {
                 WindowState = WindowState.Maximized;
             } else {
                 WindowState = WindowState.Normal;
             }
         }
 
+        /// <summary>
+        /// 退出程序
+        /// </summary>
         private void WindowClose_Click(object sender, RoutedEventArgs e) {
-            foreach(EditWindow file in EditControl.Items) {
-                if (false) {
-                    MNotifyIcon.Visible = true;
-                    MNotifyIcon.ShowBalloonTip(6);
-                    break;
+            if (!Debugger.IsAttached) {
+                foreach (EditWindow file in Files) {
+                    if (file.IsChange) {
+                        MNotifyIcon.Visible = true;
+                        MNotifyIcon.ShowBalloonTip(6);
+                        break;
+                    }
                 }
             }
             Close();
@@ -127,18 +133,116 @@ namespace MCode {
         /// 自动换行
         /// </summary>
         private void Wrap_Click(object sender, RoutedEventArgs e) {
-            if (wrapAuto.Source == null) {
-                foreach (EditWindow file in EditControl.Items) {
+            if (wrapAuto.Source is null) {
+                foreach (EditWindow file in Files) {
                     file.MTextBox.TextWrapping = TextWrapping.WrapWithOverflow;
                 }
                 wrapAuto.Source = new BitmapImage(new Uri("Resources/check32.ico", UriKind.Relative));
             } else {
 
-                foreach (EditWindow file in EditControl.Items) {
+                foreach (EditWindow file in Files) {
                     file.MTextBox.TextWrapping = TextWrapping.NoWrap;
                 }
                 wrapAuto.Source = null;
             }
+        }
+
+        /// <summary>
+        /// File->New，新建
+        /// </summary>
+        private void New_Executed(object sender, ExecutedRoutedEventArgs e) {
+            //没有路径
+            CreatFile(null);
+            TextBox_SelectionChanged(sender, e);
+        }
+
+        /// <summary>
+        /// File->Open，打开文件
+        /// </summary>
+        private void Open_Executed(object sender, ExecutedRoutedEventArgs e) {
+            //选择文件
+            var openFileDialog = new SWForms.OpenFileDialog() {
+                Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*"
+            };
+            var result = openFileDialog.ShowDialog();
+            if (result is SWForms.DialogResult.OK) {
+                //通过路径创建
+                CreatFile(openFileDialog.FileName);
+                TextBox_SelectionChanged(sender, e);
+            } else {
+                //其他的情况，若要增加要使用switch
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 创建编辑窗口实例
+        /// </summary>
+        private void CreatFile(string FilePath) {
+            EditWindow newFile = new EditWindow(FilePath);
+            newFile.UserEditEvent += TextBox_SelectionChanged;
+            newFile.CloseEvent += Close_Click;
+            Files.Add(newFile);
+            EditControl.SelectedItem = newFile;
+        }
+
+        /// <summary>
+        /// File->Save，保存文件
+        /// </summary>
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
+            EditWindow mainEdit = (EditWindow)EditControl.SelectedItem;
+            mainEdit.Save();
+        }
+
+        /// <summary>
+        /// 另存为
+        /// </summary>
+        private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e) {
+            //选择保存地址
+            var saveFileDialog = new SWForms.SaveFileDialog() {
+                Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*",
+                FileName = "未命名"
+            };
+            //result是保存文件窗体的点击结果
+            var result = saveFileDialog.ShowDialog();
+            if (result is SWForms.DialogResult.OK) {
+                EditWindow mainEdit = (EditWindow)EditControl.SelectedItem;
+                mainEdit.Save(saveFileDialog.FileName);
+            } else {
+                //其他的情况，若要增加要使用switch
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 从File->Close关闭
+        /// </summary>
+        private void Close_Executed(object sender, ExecutedRoutedEventArgs e) {
+            Close_Click(EditControl.SelectedItem,e);
+        }
+
+        /// <summary>
+        /// 点击编辑窗口的x关闭
+        /// </summary>
+        private void Close_Click(object sender, RoutedEventArgs e) {
+            if (sender is EditWindow t) {
+                if (t.IsChange) {
+                    MNotifyIcon.Visible = true;
+                    MNotifyIcon.ShowBalloonTip(6);
+                    MNotifyIcon.Visible = false;
+                }
+                Files.Remove(t);
+            }
+            TextBox_SelectionChanged(sender, e);
+        }
+
+        /// <summary>
+        /// 插入系统时间
+        /// </summary>
+        private void Date_Click(object sender, RoutedEventArgs e) {
+            EditWindow mainEdit = (EditWindow)EditControl.SelectedItem;
+            int index = mainEdit.MTextBox.SelectionStart;
+            mainEdit.MTextBox.Text = mainEdit.MTextBox.Text.Insert(index, DateTime.Now.ToString());
         }
 
 

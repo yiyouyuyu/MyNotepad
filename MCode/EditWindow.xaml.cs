@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Text;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.IO;
+using SWForms = System.Windows.Forms;
+using System.Windows;
 
 namespace MCode {
     /// <summary>
@@ -20,10 +11,18 @@ namespace MCode {
     public partial class EditWindow : TabItem {
 
         /// <summary>
-        /// 此窗口对应的文件
+        /// 正在编辑的文件
         /// </summary>
         private string FilePath { get; set; }
 
+        /// <summary>
+        /// 已经保存的文件hash
+        /// </summary>
+        private int FileHash { get; set; }
+        
+        /// <summary>
+        /// 文件名称
+        /// </summary>
         private string FileName {
             get => textBlock.Text;
             set => textBlock.Text = value;
@@ -34,16 +33,29 @@ namespace MCode {
         /// </summary>
         public TextBox MTextBox {
             get => textBox;
-            set => textBox = value;
+        }
+
+        /// <summary>
+        /// 在窗口内编辑，选择编辑窗口
+        /// </summary>
+        public event RoutedEventHandler UserEditEvent {
+            add {
+                MTextBox.SelectionChanged += value;
+                MTextBox.GotFocus += value;
+            }
+            remove {
+                MTextBox.SelectionChanged -= value;
+                MTextBox.GotFocus -= value;
+            }
         }
 
         private static int num = 1;
         /// <summary>
         /// 构造函数，新建，打开
         /// </summary>
-        public EditWindow(string path=null) {
+        public EditWindow(string path) {
             InitializeComponent();
-            if (path == null) {
+            if (path is null) {
                 FileName = "未命名" + num + ".txt";
                 num += 1;
             } else {
@@ -60,23 +72,24 @@ namespace MCode {
                 }
                 MTextBox.Text += Encoding.Default.GetString(buffer, 0, r);
                 fileStream.Close();
+                FileHash = MTextBox.Text.GetHashCode();
             }
         }
-        
+
         /// <summary>
         /// File->Save，保存文件
         /// </summary>
-        public void Save(string path=null) {
-            if (path!=null) {
+        public void Save(string path = null) {
+            if (path != null) {
                 FilePath = path;
                 FileName = Path.GetFileName(FilePath);
-            } else if(FilePath==null) {
-                var saveFileDialog = new System.Windows.Forms.SaveFileDialog() {
+            } else if (FilePath is null) {
+                var saveFileDialog = new SWForms.SaveFileDialog() {
                     Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*",
                     FileName = "未命名"
                 };
                 var result = saveFileDialog.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK) {
+                if (result is SWForms.DialogResult.OK) {
                     FilePath = saveFileDialog.FileName;
                     FileName = Path.GetFileName(FilePath);
                 } else {
@@ -88,7 +101,22 @@ namespace MCode {
             var buffer = Encoding.Default.GetBytes(MTextBox.Text);
             fileStream.Write(buffer, 0, buffer.Length);//！！！这里有个问题，一次的量可能会超过int，要改！！！
             fileStream.Close();
+            FileHash = MTextBox.Text.GetHashCode();
         }
+        
+        /// <summary>
+        /// 是否更改过
+        /// </summary>
+        public bool IsChange => FileHash != MTextBox.Text.GetHashCode();
 
+        /// <summary>
+        /// 关闭button所在的
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseButton_Click(object sender, RoutedEventArgs e) {
+            CloseEvent?.Invoke(this, e);
+        }
+        public event RoutedEventHandler CloseEvent;
     }
 }

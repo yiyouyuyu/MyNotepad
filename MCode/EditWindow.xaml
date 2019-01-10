@@ -3,13 +3,22 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          Background="GhostWhite"
          >
+    <TabItem.Style>
+        <Style TargetType="TabItem">
+
+        </Style>
+    </TabItem.Style>
     <TabItem.Header>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock x:Name="textBlock"/>
-            <Button x:Name="closeButton" Background="{x:Null}" BorderThickness="0">
+        <Grid Margin="-4,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="textBlock" Text="未命名.txt" Margin="5,0" Grid.Column="0"/>
+            <Button x:Name="closeButton" Background="{x:Null}" BorderThickness="0" Click="CloseButton_Click" Grid.Column="1" HorizontalAlignment="Right">
                 <Image Source="Resources/tabClose16.ico"/>
             </Button>
-        </StackPanel>
+        </Grid>
     </TabItem.Header>
     <Grid>
         <TextBox x:Name="textBox"
