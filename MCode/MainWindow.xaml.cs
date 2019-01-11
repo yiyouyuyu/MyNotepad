@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using SWForms = System.Windows.Forms;
 using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace MCode {
     /// <summary>
@@ -161,11 +162,11 @@ namespace MCode {
         /// </summary>
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e) {
             //选择文件
-            var openFileDialog = new SWForms.OpenFileDialog() {
+            var openFileDialog = new OpenFileDialog() {
                 Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*"
             };
-            var result = openFileDialog.ShowDialog();
-            if (result is SWForms.DialogResult.OK) {
+            bool? result = openFileDialog.ShowDialog();
+            if (result == true) {
                 //通过路径创建
                 CreatFile(openFileDialog.FileName);
                 TextBox_SelectionChanged(sender, e);
@@ -199,13 +200,13 @@ namespace MCode {
         /// </summary>
         private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e) {
             //选择保存地址
-            var saveFileDialog = new SWForms.SaveFileDialog() {
+            var saveFileDialog = new SaveFileDialog() {
                 Filter = "文本文件(*.txt)|*.txt|所有文件(*.*)|*.*",
                 FileName = "未命名"
             };
             //result是保存文件窗体的点击结果
-            var result = saveFileDialog.ShowDialog();
-            if (result is SWForms.DialogResult.OK) {
+            bool? result = saveFileDialog.ShowDialog();
+            if (result == true) {
                 EditWindow mainEdit = (EditWindow)EditControl.SelectedItem;
                 mainEdit.Save(saveFileDialog.FileName);
             } else {

@@ -7,28 +7,35 @@
         x:Class="MCode.MainWindow"
         ScrollViewer.CanContentScroll="True"
         ResizeMode="CanResizeWithGrip"
-        WindowStyle="None"
         Height="450" Width="800"
-        MinWidth="155" MinHeight="35"
-        UseLayoutRounding="True" 
+        MinWidth="155" MinHeight="43"
+        UseLayoutRounding="True"
+        Background="#FF39C5BB" 
+        WindowStyle="None" 
         >
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" GlassFrameThickness="0" CornerRadius="0"/>
     </WindowChrome.WindowChrome>
     <Window.Template>
         <ControlTemplate TargetType="{x:Type Window}">
-            <Border>
+            <Border Background="#FF39C5BB">
                 <Grid  x:Name="RootGrid">
                     <ContentPresenter/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Height="26" Margin="0">
                         <Button BorderThickness="0" Background="GhostWhite" Click="WindowMinimized_Click">
-                            <Image Source="Resources/windowMinimized32x24.ico"/>
+                            <Border Width="32" Height="24">
+                                <Path Data="F1M0,6L0,9 9,9 9,6 0,6z" Fill="#39c5bb" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
                         </Button>
                         <Button BorderThickness="0" Background="GhostWhite" Click="WindowSize_Click">
-                            <Image x:Name="windowSize" Source="Resources/windowMaximized32x24.ico"/>
+                            <Border Width="32" Height="24">
+                                <Path x:Name="windowSize" Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z" Fill="#39c5bb" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
                         </Button>
                         <Button BorderThickness="0" Background="GhostWhite" Click="WindowClose_Click">
-                            <Image Source="Resources/windowClose32x24.ico"/>
+                            <Border Width="32" Height="24">
+                                <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z" Fill="#39c5bb" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
                         </Button>
                     </StackPanel>
                 </Grid>
@@ -36,7 +43,7 @@
             <ControlTemplate.Triggers>
                 <Trigger Property="WindowState" Value="Maximized">
                     <Setter TargetName="RootGrid" Property="Margin" Value="7" />
-                    <Setter TargetName="windowSize" Property="Source" Value="Resources/windowNormal32x24.ico"/>
+                    <Setter TargetName="windowSize" Property="Data" Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -52,26 +59,15 @@
     <Window.Resources>
     </Window.Resources>
 
-    <Grid x:Name="mWindow" Background="GhostWhite" Margin="0">
+    <Grid x:Name="RootGrid" Margin="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="windowTitle" Grid.ColumnSpan="3" MouseLeftButtonDown="WindowMove" Background="GhostWhite">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="102"/>
-            </Grid.ColumnDefinitions>
-            <Image Source="Resources/icon43x25.ico" Grid.Column="1" Grid.RowSpan="2" Grid.Row="1" VerticalAlignment="Top"/>
-            <Menu x:Name="menu"  Background="{x:Null}" VerticalAlignment="Bottom" KeyboardNavigation.TabNavigation="Contained" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1" FontSize="14" Margin="0" >
+        <DockPanel x:Name="windowTitle" Grid.ColumnSpan="3" MouseLeftButtonDown="WindowMove" Background="GhostWhite">
+            <Image Source="Resources/icon43x25.ico" Height="25" Margin="5"/>
+            <Menu x:Name="menu"  Background="{x:Null}" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="Contained" Grid.Column="1" FontSize="14" Margin="5" >
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Command="New">
                         <MenuItem.Icon>
@@ -104,8 +100,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="_Find" InputGestureText="Ctrl+F"/>
-                    <MenuItem Header="_Replace" InputGestureText="Ctrl+H"/>
+                    <MenuItem Header="_Find"/>
+                    <MenuItem Header="_Replace"/>
                     <Separator/>
                     <MenuItem Header="_Cut" Command="Cut"/>
                     <MenuItem Header="_Copy" Command="Copy"/>
@@ -125,33 +121,34 @@
                     <MenuItem Header="_Aboat"/>
                 </MenuItem>
             </Menu>
-        </Grid>
-        <ToolBarTray Grid.Row="1" Grid.Column="1" Margin="5,0" HorizontalAlignment="Left">
-            <ToolBar>
-                <Button Command="New">
-                    <Image Source="Resources/toolNew32.ico" Height="16"/>
-                </Button>
-                <Button Command="Open">
-                    <Image Source="Resources/toolOpen32.ico" Height="16"/>
-                </Button>
-                <Button Command="Save">
-                    <Image Source="Resources/toolSave32.ico" Height="16"/>
-                </Button>
-            </ToolBar>
-            <ToolBar>
-                <Button Command="Undo">
-                    <Image x:Name="undo" Source="Resources/toolUndo32.ico" Height="16"/>
-                </Button>
-                <Button Command="Redo">
-                    <Image x:Name="redoImage" Source="Resources/toolRedo32.ico" Height="16"/>
-                </Button>
-            </ToolBar>
-        </ToolBarTray>
-        <Grid Grid.Row="2" Background="#39c5bb">
-            <TabControl x:Name="editControl" Margin="5" BorderThickness="0" Padding="0" Background="{x:Null}">
-            </TabControl>
-        </Grid>
-        <StatusBar Background="#39C5BB" Grid.Row="3" >
+        </DockPanel>
+        <DockPanel Grid.Row="1">
+            <DockPanel DockPanel.Dock="Top" Background="GhostWhite">
+                <ToolBarTray Margin="5,0" Background="{x:Null}">
+                    <ToolBar Background="{x:Null}">
+                        <Button Command="New">
+                            <Image Source="Resources/toolNew32.ico" Height="16"/>
+                        </Button>
+                        <Button Command="Open">
+                            <Image Source="Resources/toolOpen32.ico" Height="16"/>
+                        </Button>
+                        <Button Command="Save">
+                            <Image Source="Resources/toolSave32.ico" Height="16"/>
+                        </Button>
+                    </ToolBar>
+                    <ToolBar Background="{x:Null}">
+                        <Button Command="Undo">
+                            <Image x:Name="undo" Source="Resources/toolUndo32.ico" Height="16"/>
+                        </Button>
+                        <Button Command="Redo">
+                            <Image x:Name="redoImage" Source="Resources/toolRedo32.ico" Height="16"/>
+                        </Button>
+                    </ToolBar>
+                </ToolBarTray>
+            </DockPanel>
+            <TabControl x:Name="editControl" Margin="5" BorderThickness="0" Padding="0" Background="{x:Null}"/>
+        </DockPanel>
+        <StatusBar Background="#39C5BB" Grid.Row="2" >
             <StatusBarItem x:Name="textBoxInformation" Content=""  Foreground="White" HorizontalAlignment="Left"/>
         </StatusBar>
     </Grid>

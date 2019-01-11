@@ -112,8 +112,6 @@ namespace MCode {
         /// <summary>
         /// 关闭button所在的
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e) {
             CloseEvent?.Invoke(this, e);
         }
