@@ -20,13 +20,15 @@
             </Button>
         </Grid>
     </TabItem.Header>
-    <Grid>
+    <Grid Background="White">
+        <Image HorizontalAlignment="Right" VerticalAlignment="Top" Source="Resources/miku_halloworld.jpg" Opacity="0.1778"></Image>
         <TextBox x:Name="textBox"
                  FontSize="14"
                  AcceptsReturn="True"
                  HorizontalScrollBarVisibility="Visible"
                  VerticalScrollBarVisibility="Visible"
-                 AcceptsTab="True"
+                 AcceptsTab="True" 
+                 Background="{x:Null}"
                  />
     </Grid>
 </TabItem>

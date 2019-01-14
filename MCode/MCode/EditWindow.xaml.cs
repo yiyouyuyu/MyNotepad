@@ -58,6 +58,7 @@ namespace MCode {
             if (path is null) {
                 FileName = "未命名" + num + ".txt";
                 num += 1;
+                FileHash = MTextBox.Text.GetHashCode();
             } else {
                 FilePath = path;
                 //设置选项框名字

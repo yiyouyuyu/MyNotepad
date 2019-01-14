@@ -48,14 +48,19 @@ namespace MCode {
         /// </summary>
         public MainWindow() {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             Title = "MCode";
-            MNotifyIcon = new SWForms.NotifyIcon {
+            MNotifyIcon = new SWForms.NotifyIcon
+            {
                 Icon = Properties.Resources.icon32x32,
                 Text = "MCode",
                 BalloonTipText = "刚刚的文件没有保存"
             };
         }
-        
+
         /// <summary>
         /// 移动窗口
         /// </summary>
@@ -246,6 +251,12 @@ namespace MCode {
             mainEdit.MTextBox.Text = mainEdit.MTextBox.Text.Insert(index, DateTime.Now.ToString());
         }
 
-
+        private void CanClose_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            if(EditControl.SelectedItem is null) {
+                e.CanExecute = false;
+            } else {
+                e.CanExecute = true;
+            }
+        }
     }
 }

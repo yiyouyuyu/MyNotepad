@@ -7,11 +7,12 @@
         x:Class="MCode.MainWindow"
         ScrollViewer.CanContentScroll="True"
         ResizeMode="CanResizeWithGrip"
-        Height="450" Width="800"
         MinWidth="155" MinHeight="43"
         UseLayoutRounding="True"
         Background="#FF39C5BB" 
         WindowStyle="None" 
+        Loaded="Window_Loaded"
+        Width="800" Height="800"
         >
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" GlassFrameThickness="0" CornerRadius="0"/>
@@ -54,7 +55,7 @@
         <CommandBinding Command="Open" Executed="Open_Executed"/>
         <CommandBinding Command="Save" Executed="Save_Executed"/>
         <CommandBinding Command="SaveAs" Executed="SaveAs_Executed"/>
-        <CommandBinding Command="Close" Executed="Close_Executed"/>
+        <CommandBinding Command="Close" Executed="Close_Executed" CanExecute="CanClose_CanExecute"/>
     </Window.CommandBindings>
     <Window.Resources>
     </Window.Resources>
@@ -70,23 +71,23 @@
             <Menu x:Name="menu"  Background="{x:Null}" VerticalAlignment="Center" KeyboardNavigation.TabNavigation="Contained" Grid.Column="1" FontSize="14" Margin="5" >
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Command="New">
-                        <MenuItem.Icon>
-                            <Image Source="Resources/toolNew32.ico"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="_Open" Command="Open">
-                        <MenuItem.Icon>
-                            <Image Source="Resources/toolOpen32.ico"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="_Save"  Command="Save" >
-                        <MenuItem.Icon>
-                            <Image Source="Resources/toolSave32.ico"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Save _as" Command="SaveAs"/>
-                    <Separator/>
-                    <MenuItem Header="_Close" Command="Close"/>
+                            <MenuItem.Icon>
+                                <Image Source="Resources/toolNew32.ico"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Open" Command="Open">
+                            <MenuItem.Icon>
+                                <Image Source="Resources/toolOpen32.ico"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Save"  Command="Save" >
+                            <MenuItem.Icon>
+                                <Image Source="Resources/toolSave32.ico"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Save _as" Command="SaveAs"/>
+                        <Separator/>
+                    <MenuItem Header="_Close" Command="Close" />
                 </MenuItem>
                 <MenuItem Header="_Edit">
                     <MenuItem Header="_Undo" Command="Undo">
