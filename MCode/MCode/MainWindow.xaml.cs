@@ -69,7 +69,7 @@ namespace MCode {
                 ChangeWindowState();
                 //因为拖动区域在窗口顶部，所以移动到最上面就行了
                 Point mousePoint = Mouse.GetPosition(this);
-                Left = mousePoint.X - Width * mousePoint.X / SystemParameters.WorkArea.Width;
+                Left = mousePoint.X * (1 - (Width / SystemParameters.WorkArea.Width));
                 Top =0;
             }
             DragMove();
@@ -197,7 +197,7 @@ namespace MCode {
         /// </summary>
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
             EditWindow mainEdit = (EditWindow)EditControl.SelectedItem;
-            mainEdit.Save();
+            mainEdit?.Save();
         }
 
         /// <summary>
@@ -253,6 +253,14 @@ namespace MCode {
 
         private void CanClose_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             if(EditControl.SelectedItem is null) {
+                e.CanExecute = false;
+            } else {
+                e.CanExecute = true;
+            }
+        }
+
+        private void CanSave_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            if (EditControl.SelectedItem is null) {
                 e.CanExecute = false;
             } else {
                 e.CanExecute = true;
