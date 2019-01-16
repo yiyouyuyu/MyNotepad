@@ -65,12 +65,12 @@ namespace MCode {
         /// 移动窗口
         /// </summary>
         private void WindowMove(object sender, MouseButtonEventArgs e) {
-            if(WindowState is WindowState.Maximized) {
-                ChangeWindowState();
+            if (WindowState is WindowState.Maximized) {
+                WindowState = WindowState.Normal;
                 //因为拖动区域在窗口顶部，所以移动到最上面就行了
                 Point mousePoint = Mouse.GetPosition(this);
                 Left = mousePoint.X * (1 - (Width / SystemParameters.WorkArea.Width));
-                Top =0;
+                Top = 0;
             }
             DragMove();
         }
@@ -95,28 +95,24 @@ namespace MCode {
         }
 
         /// <summary>
-        /// 最小化
+        /// 窗口最小化
         /// </summary>
         private void WindowMinimized_Click(object sender, RoutedEventArgs e) {
             WindowState = WindowState.Minimized;
         }
 
         /// <summary>
-        /// 改变窗口大小
+        /// 窗口最大化
         /// </summary>
-        private void WindowSize_Click(object sender, RoutedEventArgs e) {
-            ChangeWindowState();
+        private void WindowMaximized_Click(object sender, RoutedEventArgs e) {
+            WindowState = WindowState.Maximized;
         }
 
         /// <summary>
-        /// 改变窗口大小
+        /// 窗口正常
         /// </summary>
-        private void ChangeWindowState() {
-            if (WindowState is WindowState.Normal) {
-                WindowState = WindowState.Maximized;
-            } else {
-                WindowState = WindowState.Normal;
-            }
+        private void WindowNormal_Click(object sender, RoutedEventArgs e) {
+            WindowState = WindowState.Normal;
         }
 
         /// <summary>
@@ -139,17 +135,16 @@ namespace MCode {
         /// 自动换行
         /// </summary>
         private void Wrap_Click(object sender, RoutedEventArgs e) {
-            if (wrapAuto.Source is null) {
+            if (((MenuItem)sender).IsChecked == false) {
                 foreach (EditWindow file in Files) {
-                    file.MTextBox.TextWrapping = TextWrapping.WrapWithOverflow;
+                    file.MTextBox.TextWrapping = TextWrapping.Wrap;
                 }
-                wrapAuto.Source = new BitmapImage(new Uri("Resources/check32.ico", UriKind.Relative));
+                ((MenuItem)sender).IsChecked = true;
             } else {
-
                 foreach (EditWindow file in Files) {
                     file.MTextBox.TextWrapping = TextWrapping.NoWrap;
                 }
-                wrapAuto.Source = null;
+                ((MenuItem)sender).IsChecked = false;
             }
         }
 
