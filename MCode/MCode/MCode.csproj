@@ -115,6 +115,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\ButtonIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -155,49 +159,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\toolSave32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\toolOpen32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\toolNew32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\toolUndo32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\toolRedo32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\windowClose32x24.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\windowMinimized32x24.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\windowNormal32x24.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\windowMaximized32x24.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\icon43x25.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\check32.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\icon32x32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\toolRedoU32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\toolUndoU32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\tabClose16.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\miku_halloworld.jpg" />

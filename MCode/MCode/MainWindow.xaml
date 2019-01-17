@@ -19,220 +19,38 @@
         <WindowChrome CaptionHeight="0" GlassFrameThickness="0" CornerRadius="0"/>
     </WindowChrome.WindowChrome>
     <Window.Resources>
-        <Style x:Key="toolBarButton">
-            <Setter Property="FrameworkElement.Width" Value="20"/>
-            <Setter Property="FrameworkElement.Height" Value="23"/>
-            <Setter Property="Control.BorderThickness" Value="0"/>
-        </Style>
-        <ControlTemplate x:Key="ToolBarButtonControlTemplate" TargetType="{x:Type Button}">
-            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                <Canvas Width="16" Height="16">
-                    <ContentPresenter/>
-                </Canvas>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" TargetName="Bd" Value="#80DADADA"/>
-                    <Setter Property="Background" TargetName="Bd" Value="#210080FF"/>
-                </Trigger>
-                <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter Property="BorderBrush" TargetName="Bd" Value="#80DADADA"/>
-                    <Setter Property="Background" TargetName="Bd" Value="#210080FF"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="BorderBrush" TargetName="Bd" Value="#90006CD9"/>
-                    <Setter Property="Background" TargetName="Bd" Value="#400080FF"/>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <SolidColorBrush x:Key="ToolBarHorizontalBackground" Color="#FFEEF5FD"/>
-        <SolidColorBrush x:Key="ToolBarToggleButtonVerticalBackground" Color="#FFEEF5FD"/>
-        <SolidColorBrush x:Key="ToolBarButtonHover" Color="#210080FF"/>
-        <SolidColorBrush x:Key="ToolBarGripper" Color="#FF6D6D6D"/>
-        <Style x:Key="ToolBarVerticalOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Background" Value="{StaticResource ToolBarToggleButtonVerticalBackground}"/>
-            <Setter Property="MinHeight" Value="0"/>
-            <Setter Property="MinWidth" Value="0"/>
-            <Setter Property="Template">
+        <Style x:Key="toolBarButton" TargetType="Button">
+            <Setter Property="Button.Width" Value="20"/>
+            <Setter Property="Button.Height" Value="23"/>
+            <Setter Property="Button.BorderThickness" Value="0"/>
+            <Setter Property="Button.Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border x:Name="Bd" SnapsToDevicePixels="true" CornerRadius="0,0,3,3" Background="{TemplateBinding Background}">
-                            <Canvas Width="7" VerticalAlignment="Bottom" SnapsToDevicePixels="true" Margin="2,7,2,2" Height="6" HorizontalAlignment="Right">
-                                <Path Data="M 1.5 1 L 1.5 6" Stroke="White"/>
-                                <Path Data="M 0.5 0 L 0.5 5" Stroke="{TemplateBinding Foreground}"/>
-                                <Path Data="M 3.5 0.5 L 7 3.5 L 4 6.5 Z" Fill="White"/>
-                                <Path Data="M 3 -0.5 L 6 2.5 L 3 5.5 Z" Fill="{TemplateBinding Foreground}"/>
-                            </Canvas>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="16" Height="16"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ToolBarButtonHover}"/>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="#80DADADA"/>
+                                <Setter Property="Background" TargetName="Bd" Value="#210080FF"/>
                             </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="true">
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ToolBarButtonHover}"/>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="#80DADADA"/>
+                                <Setter Property="Background" TargetName="Bd" Value="#210080FF"/>
                             </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{StaticResource ToolBarGripper}"/>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="#90006CD9"/>
+                                <Setter Property="Background" TargetName="Bd" Value="#400080FF"/>
                             </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
-                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <SolidColorBrush x:Key="ToolBarVerticalBackground" Color="#FFEEF5FD"/>
-        <SolidColorBrush x:Key="ToolBarToggleButtonHorizontalBackground" Color="#FFEEF5FD"/>
-        <Style x:Key="ToolBarHorizontalOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Background" Value="{StaticResource ToolBarToggleButtonHorizontalBackground}"/>
-            <Setter Property="MinHeight" Value="0"/>
-            <Setter Property="MinWidth" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border x:Name="Bd" SnapsToDevicePixels="true" CornerRadius="0,3,3,0" Background="{TemplateBinding Background}">
-                            <Canvas Width="6" VerticalAlignment="Bottom" SnapsToDevicePixels="true" Margin="7,2,2,2" Height="7" HorizontalAlignment="Right">
-                                <Path Data="M 1 1.5 L 6 1.5" Stroke="White"/>
-                                <Path Data="M 0 0.5 L 5 0.5" Stroke="{TemplateBinding Foreground}"/>
-                                <Path Data="M 0.5 4 L 6.5 4 L 3.5 7 Z" Fill="White"/>
-                                <Path Data="M -0.5 3 L 5.5 3 L 2.5 6 Z" Fill="{TemplateBinding Foreground}"/>
-                            </Canvas>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ToolBarButtonHover}"/>
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="true">
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ToolBarButtonHover}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{StaticResource ToolBarGripper}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
-                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <SolidColorBrush x:Key="ToolBarMenuBorder" Color="#FFB6BDC5"/>
-        <SolidColorBrush x:Key="ToolBarSubMenuBackground" Color="#FFEEF5FD"/>
-        <Style x:Key="ToolBarThumbStyle" TargetType="{x:Type Thumb}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border SnapsToDevicePixels="True" Padding="{TemplateBinding Padding}" Background="Transparent">
-                            <Rectangle>
-                                <Rectangle.Fill>
-                                    <DrawingBrush ViewboxUnits="Absolute" ViewportUnits="Absolute" Viewport="0,0,4,4" Viewbox="0,0,4,4" TileMode="Tile">
-                                        <DrawingBrush.Drawing>
-                                            <DrawingGroup>
-                                                <GeometryDrawing Brush="White" Geometry="M 1 1 L 1 3 L 3 3 L 3 1 z"/>
-                                                <GeometryDrawing Brush="{StaticResource ToolBarGripper}" Geometry="M 0 0 L 0 2 L 2 2 L 2 0 z"/>
-                                            </DrawingGroup>
-                                        </DrawingBrush.Drawing>
-                                    </DrawingBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Cursor" Value="SizeAll"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ToolBarMainPanelBorderStyle" TargetType="{x:Type Border}">
-            <Setter Property="Margin" Value="0,0,11,0"/>
-            <Setter Property="CornerRadius" Value="3,3,3,3"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
-                    <Setter Property="CornerRadius" Value="0,0,0,0"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="{x:Type ToolBar}">
-            <Setter Property="Background" Value="{StaticResource ToolBarHorizontalBackground}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToolBar}">
-                        <Grid x:Name="Grid" Margin="3,1,1,1" SnapsToDevicePixels="true">
-                            <Grid x:Name="OverflowGrid" HorizontalAlignment="Right">
-                                <ToggleButton x:Name="OverflowButton" ClickMode="Press" FocusVisualStyle="{x:Null}" IsChecked="{Binding IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding HasOverflowItems}" Style="{StaticResource ToolBarHorizontalOverflowButtonStyle}" Background="{TemplateBinding Background}"/>
-                                <Popup x:Name="OverflowPopup" AllowsTransparency="true" Focusable="false" IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom" StaysOpen="false">
-                                    <Themes:SystemDropShadowChrome x:Name="Shdw" Color="Transparent">
-                                        <Border x:Name="ToolBarSubMenuBorder" BorderBrush="{StaticResource ToolBarMenuBorder}" BorderThickness="1" Background="{StaticResource ToolBarSubMenuBackground}" RenderOptions.ClearTypeHint="Enabled">
-                                            <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel" KeyboardNavigation.DirectionalNavigation="Cycle" FocusVisualStyle="{x:Null}" Focusable="true" Margin="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle" WrapWidth="200"/>
-                                        </Border>
-                                    </Themes:SystemDropShadowChrome>
-                                </Popup>
-                            </Grid>
-                            <Border x:Name="MainPanelBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" Style="{StaticResource ToolBarMainPanelBorderStyle}">
-                                <DockPanel KeyboardNavigation.TabIndex="1" KeyboardNavigation.TabNavigation="Local">
-                                    <Thumb x:Name="ToolBarThumb" Margin="-3,-1,0,0" Padding="6,5,1,6" Style="{StaticResource ToolBarThumbStyle}" Width="10"/>
-                                    <ContentPresenter x:Name="ToolBarHeader" ContentSource="Header" HorizontalAlignment="Center" Margin="4,0,4,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                                    <ToolBarPanel x:Name="PART_ToolBarPanel" IsItemsHost="true" Margin="0,1,2,2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                </DockPanel>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsOverflowOpen" Value="true">
-                                <Setter Property="IsEnabled" TargetName="ToolBarThumb" Value="false"/>
-                            </Trigger>
-                            <Trigger Property="Header" Value="{x:Null}">
-                                <Setter Property="Visibility" TargetName="ToolBarHeader" Value="Collapsed"/>
-                            </Trigger>
-                            <Trigger Property="ToolBarTray.IsLocked" Value="true">
-                                <Setter Property="Visibility" TargetName="ToolBarThumb" Value="Collapsed"/>
-                            </Trigger>
-                            <Trigger Property="HasDropShadow" SourceName="OverflowPopup" Value="true">
-                                <Setter Property="Margin" TargetName="Shdw" Value="0,0,5,5"/>
-                                <Setter Property="SnapsToDevicePixels" TargetName="Shdw" Value="true"/>
-                                <Setter Property="Color" TargetName="Shdw" Value="#71000000"/>
-                            </Trigger>
-                            <Trigger Property="Orientation" Value="Vertical">
-                                <Setter Property="Margin" TargetName="Grid" Value="1,3,1,1"/>
-                                <Setter Property="Style" TargetName="OverflowButton" Value="{StaticResource ToolBarVerticalOverflowButtonStyle}"/>
-                                <Setter Property="Height" TargetName="ToolBarThumb" Value="10"/>
-                                <Setter Property="Width" TargetName="ToolBarThumb" Value="Auto"/>
-                                <Setter Property="Margin" TargetName="ToolBarThumb" Value="-1,-3,0,0"/>
-                                <Setter Property="Padding" TargetName="ToolBarThumb" Value="5,6,6,1"/>
-                                <Setter Property="Margin" TargetName="ToolBarHeader" Value="0,0,0,4"/>
-                                <Setter Property="Margin" TargetName="PART_ToolBarPanel" Value="1,0,2,2"/>
-                                <Setter Property="DockPanel.Dock" TargetName="ToolBarThumb" Value="Top"/>
-                                <Setter Property="DockPanel.Dock" TargetName="ToolBarHeader" Value="Top"/>
-                                <Setter Property="HorizontalAlignment" TargetName="OverflowGrid" Value="Stretch"/>
-                                <Setter Property="VerticalAlignment" TargetName="OverflowGrid" Value="Bottom"/>
-                                <Setter Property="Placement" TargetName="OverflowPopup" Value="Right"/>
-                                <Setter Property="Margin" TargetName="MainPanelBorder" Value="0,0,0,11"/>
-                                <Setter Property="Background" Value="{StaticResource ToolBarVerticalBackground}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
+                            <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="true">
-                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                </DataTrigger>
-            </Style.Triggers>
         </Style>
     </Window.Resources>
-
     <Window.Template>
         <ControlTemplate TargetType="{x:Type Window}">
             <Border x:Name="Content" Background="{TemplateBinding Background}">
@@ -253,7 +71,6 @@
         <CommandBinding Command="SaveAs" Executed="SaveAs_Executed" CanExecute="CanSave_CanExecute"/>
         <CommandBinding Command="Close" Executed="Close_Executed" CanExecute="CanClose_CanExecute"/>
     </Window.CommandBindings>
-
 
     <Grid x:Name="RootGrid" Margin="0">
         <Grid.RowDefinitions>
@@ -288,6 +105,7 @@
                     </Button.Style>
                 </Button>
                 <Button Click="WindowNormal_Click">
+                    <Path Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" Fill="#39c5bb" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <Button.Style>
                         <Style BasedOn="{StaticResource ResourceKey=windowTitleButton}" TargetType="Button">
                             <Style.Triggers>
@@ -297,7 +115,6 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-                    <Path Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" Fill="#39c5bb" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Button>
                 <Button Style="{StaticResource windowTitleButton}" Click="WindowClose_Click">
                     <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z" Fill="#39c5bb" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -307,17 +124,17 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Command="New">
                         <MenuItem.Icon>
-                            <Image Source="Resources/toolNew32.ico"/>
+                            <Image Style="{StaticResource NewFileIcon}"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Open" Command="Open">
                         <MenuItem.Icon>
-                            <Image Source="Resources/toolOpen32.ico"/>
+                            <Image Style="{StaticResource OpenFileIcon}"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Save"  Command="Save" >
                         <MenuItem.Icon>
-                            <Image Source="Resources/toolSave32.ico"/>
+                            <Image Style="{StaticResource SaveFileIcon}"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Save _as" Command="SaveAs"/>
@@ -327,12 +144,12 @@
                 <MenuItem Header="_Edit">
                     <MenuItem Header="_Undo" Command="Undo">
                         <MenuItem.Icon>
-                            <Image Source="Resources/toolUndo32.ico"/>
+                            <Image Style="{StaticResource UndoIcon}"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Redo" Command="Redo">
                         <MenuItem.Icon>
-                            <Image Source="Resources/toolRedo32.ico"/>
+                            <Image Style="{StaticResource RedoIcon}"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
@@ -362,41 +179,22 @@
             <DockPanel DockPanel.Dock="Top" Background="GhostWhite">
                 <ToolBarTray Margin="5,0" Background="{x:Null}">
                     <ToolBar Background="{x:Null}">
-                        <Button Style="{StaticResource ResourceKey=toolBarButton}" Command="New">
-                            <Canvas Width="16" Height="16">
-                                <Path Data="M5,3 L5,15 15,15 15,6 12,3z" Fill="White" Stroke="White" Width="16" Height="16" StrokeThickness="2" ClipToBounds="True"/>
-                                <Path Data="M5,3 L5,15 15,15 15,6 12,3z M6,4 6,14 14,14 14,7 11,7 11,4z" Fill="Black" Width="16" Height="16"/>
-                                <Path Data="M2,1 L2,2 3,2 3,3 1,3 1,4 3,4 3,5 2,5 2,6 3,6 3,5 4,5 4,7 5,7 5,5 6,5 6,6 7,6 7,5 6,5 6,4 8,4 8,3 6,3 6,2 7,2 7,1 6,1 6,2 5,2 5,0 4,0 4,2 3,2 3,1z" Fill="White" Stroke="White" Width="16" Height="16" StrokeThickness="2" ClipToBounds="True"/>
-                                <Path Data="M2,1 L2,2 3,2 3,3 1,3 1,4 3,4 3,5 2,5 2,6 3,6 3,5 4,5 4,7 5,7 5,5 6,5 6,6 7,6 7,5 6,5 6,4 8,4 8,3 6,3 6,2 7,2 7,1 6,1 6,2 5,2 5,0 4,0 4,2 3,2 3,1z M4,3 L4,4 5,4 5,3z" Fill="#39C5BB" Width="16" Height="16"/>
-                            </Canvas>
+                        <Button Style="{StaticResource toolBarButton}" Command="New">
+                            <Image Style="{StaticResource NewFileIcon}"/>
                         </Button>
                         <Button Style="{StaticResource ResourceKey=toolBarButton}" Command="Open">
-                            <Canvas Width="16" Height="16">
-                                <Path Data="M2,4 L2,10 1,10 3,15 15,15 15,4z" Fill="White" Stroke="White" Width="16" Height="16" StrokeThickness="2" ClipToBounds="True"/>
-                                <Path Data="M2,4 L2,10 1,10 3,15 15,15 15,4z M3,5 3,10 12,10 14,15 14,5z" Fill="#FFDAB173" Width="16" Height="16"/>
-                                <Path Data="M6,3 L3.5,3 A2.5,2.5,0,0,0,3.5,8 L4,8 4,7 3.5,7 A1.5,1.5,0,0,1,3.5,4 L6,4 4,6 6,6 8.5,3.5 6,1 4,1z" Fill="White" Stroke="White" Width="16" Height="16" StrokeThickness="2" ClipToBounds="True"/>
-                                <Path Data="M6,3 L3.5,3 A2.5,2.5,0,0,0,3.5,8 L4,8 4,7 3.5,7 A1.5,1.5,0,0,1,3.5,4 L6,4 4,6 6,6 8.5,3.5 6,1 4,1z" Fill="#39C5BB" Width="16" Height="16"/>
-                            </Canvas>
+                            <Image Style="{StaticResource OpenFileIcon}"/>
                         </Button>
                         <Button Style="{StaticResource ResourceKey=toolBarButton}" Command="Save">
-                            <Canvas Width="16" Height="16">
-                                <Path Data="M2,2 L12,2 14,4 14,14 2,14z" Fill="White" Stroke="White" Width="16" Height="16" StrokeThickness="2" ClipToBounds="True"/>
-                                <Path Data="M2,2 L5,2 5,7 11,7 11,2 12,2 14,4 14,14 2,14z M8,2 L10,2 10,5 8,5z" Fill="#FF39C5BB" Width="16" Height="16"/>
-                            </Canvas>
+                            <Image Style="{StaticResource SaveFileIcon}"/>
                         </Button>
                     </ToolBar>
                     <ToolBar Background="{x:Null}">
-                        <Button Style="{StaticResource ResourceKey=toolBarButton}" Command="Undo" Template="{DynamicResource ToolBarButtonControlTemplate}">
-                            <Canvas Width="16" Height="16">
-                                <Path Data="M4,1 L2,3 2,7 6,7 8,5 5.757,5 6.879,3.879 A3,3,0,0,1,11.121,8.121 L5.521,13.621 6.935,15.035 12.535,9.535 A5,5,0,0,0,5.465,2.465 L4,3.930z" Fill="White" Stroke="White" Width="16" Height="16" StrokeThickness="2" ClipToBounds="True"/>
-                                <Path Data="M4,1 L2,3 2,7 6,7 8,5 5.757,5 6.879,3.879 A3,3,0,0,1,11.121,8.121 L5.521,13.621 6.935,15.035 12.535,9.535 A5,5,0,0,0,5.465,2.465 L4,3.930z" Fill="#39C5BB" Width="16" Height="16"/>
-                            </Canvas>
+                        <Button Style="{StaticResource ResourceKey=toolBarButton}" Command="Undo">
+                            <Image Style="{StaticResource UndoIcon}"/>
                         </Button>
                         <Button Style="{StaticResource ResourceKey=toolBarButton}" Command="Redo">
-                            <Canvas Width="16" Height="16">
-                                <Path Data="M12,1 L14,3 14,7 10,7 8,5 10.243,5 9.121,3.879 A3,3,0,0,0,4.879,8.121 L10.479,13.621 9.065,15.035 3.465,9.535 A5,5,0,0,1,10.535,2.465 L12,3.930z" Fill="White" Stroke="White" Width="16" Height="16" StrokeThickness="2" ClipToBounds="True"/>
-                                <Path Data="M12,1 L14,3 14,7 10,7 8,5 10.243,5 9.121,3.879 A3,3,0,0,0,4.879,8.121 L10.479,13.621 9.065,15.035 3.465,9.535 A5,5,0,0,1,10.535,2.465 L12,3.930z" Fill="#39C5BB" Width="16" Height="16"/>
-                            </Canvas>
+                            <Image Style="{StaticResource RedoIcon}"/>
                         </Button>
                     </ToolBar>
                 </ToolBarTray>
