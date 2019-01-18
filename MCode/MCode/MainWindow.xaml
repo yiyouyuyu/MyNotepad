@@ -14,12 +14,25 @@
         UseLayoutRounding="True"
         Background="#FF39C5BB" 
         WindowStyle="None" 
+        Width="800" Height="450" 
+        MaxHeight="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
         Loaded="Window_Loaded"
-        Width="800" Height="450"
         >
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" GlassFrameThickness="0" CornerRadius="0"/>
     </WindowChrome.WindowChrome>
+    <Window.Template>
+        <ControlTemplate TargetType="{x:Type Window}">
+            <Border x:Name="Content" Background="{TemplateBinding Background}">
+                <ContentPresenter Margin="0"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="WindowState" Value="Maximized">
+                    <Setter TargetName="Content" Property="Padding" Value="6,6,6,10"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Template>
     <Window.Resources>
         <Style x:Key="toolBarButton" TargetType="Button">
             <Setter Property="Button.Width" Value="20"/>
@@ -238,18 +251,6 @@
         </Style>
         <!--menustyle-->
     </Window.Resources>
-    <Window.Template>
-        <ControlTemplate TargetType="{x:Type Window}">
-            <Border x:Name="Content" Background="{TemplateBinding Background}">
-                <ContentPresenter Margin="0"/>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="WindowState" Value="Maximized">
-                    <Setter TargetName="Content" Property="Padding" Value="6,6,6,36" />
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-    </Window.Template>
     <Window.CommandBindings>
         <!--File-->
         <CommandBinding Command="New" Executed="New_Executed"/>
