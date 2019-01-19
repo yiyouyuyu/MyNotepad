@@ -10,7 +10,8 @@
         ResizeMode="CanResizeWithGrip"
         MinWidth="155" MinHeight="35"
         UseLayoutRounding="True"
-        Background="#FF39C5BB" 
+        SnapsToDevicePixels="True"
+        Background="GhostWhite" 
         Width="800" Height="450" 
         MaxHeight="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}"
         Loaded="Window_Loaded"
@@ -43,16 +44,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="#80DADADA"/>
-                                <Setter Property="Background" TargetName="Bd" Value="#210080FF"/>
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="#80DADADA"/>
-                                <Setter Property="Background" TargetName="Bd" Value="#210080FF"/>
+                                <Setter Property="Background" TargetName="Bd" Value="#FF66CCFF"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="#90006CD9"/>
-                                <Setter Property="Background" TargetName="Bd" Value="#400080FF"/>
+                                <Setter Property="Background" TargetName="Bd" Value="#FF4FC8DD"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
@@ -246,9 +241,9 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <!--menustyle-->
+        <!--menuitemstyle-->
         <ControlTemplate x:Key="MenuItemControlTemplate" x:Shared="False"  TargetType="{x:Type MenuItem}">
-            <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" >
                 <Grid VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -284,8 +279,7 @@
                     <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
                 </Trigger>
                 <Trigger Property="IsHighlighted" Value="True">
-                    <Setter Property="Background" TargetName="templateRoot" Value="#3D26A0DA"/>
-                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF26A0DA"/>
+                    <Setter Property="Background" TargetName="templateRoot" Value="#FF66CCFF"/>
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070"/>
@@ -294,6 +288,11 @@
                 <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
                     <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
                     <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+                </Trigger>
+                <Trigger Property="IsSubmenuOpen" Value="True">
+                    <Setter Property="Background" TargetName="templateRoot" Value="Ghostwhite"/>
+                    <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF999999"/>
+                    <Setter Property="BorderThickness" TargetName="templateRoot" Value="1"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -318,6 +317,7 @@
             <StackPanel x:Name="windowTitleButton" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0" DockPanel.Dock="Right">
                 <StackPanel.Resources>
                     <Style x:Key="windowTitleButton" TargetType="{x:Type Button}">
+                        <Setter Property="Focusable" Value="False"/>
                         <Setter Property="Width" Value="34"/>
                         <Setter Property="Height" Value="26"/>
                         <Setter Property="BorderThickness" Value="0"/>
@@ -480,11 +480,21 @@
                     </ToolBar>
                 </ToolBarTray>
             </DockPanel>
-            <TabControl x:Name="editControl" Margin="5" BorderThickness="0" Padding="0" Background="{x:Null}"/>
+            <TabControl x:Name="editControl" Margin="5" BorderThickness="0" Padding="0,2,0,0" Background="#FF39C5BB">
+                <TabControl.Style>
+                    <Style TargetType="TabControl">
+                        <Style.Triggers>
+                            <Trigger Property="HasItems" Value="False">
+                                <Setter Property="Opacity" Value="0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabControl.Style>
+            </TabControl>
         </DockPanel>
-        <DockPanel Background="#39C5BB" Grid.Row="2" >
+        <DockPanel Background="#FF39C5BB" Grid.Row="2" >
             <!--<ResizeGrip DockPanel.Dock="Right"/>-->
-            <StatusBarItem x:Name="textBoxInformation" Foreground="White"/>
+            <StatusBarItem x:Name="textBoxInformation" Content=" " Foreground="White"/>
         </DockPanel>
     </Grid>
 </Window>
