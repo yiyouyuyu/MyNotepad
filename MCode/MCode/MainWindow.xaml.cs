@@ -66,11 +66,11 @@ namespace MCode {
         /// </summary>
         private void WindowMove(object sender, MouseButtonEventArgs e) {
             if (WindowState is WindowState.Maximized) {
-                WindowState = WindowState.Normal;
                 //因为拖动区域在窗口顶部，所以移动到最上面就行了
                 Point mousePoint = Mouse.GetPosition(this);
                 Left = mousePoint.X * (1 - (Width / SystemParameters.WorkArea.Width));
                 Top = 0;
+                WindowState = WindowState.Normal;
             }
             DragMove();
         }
